@@ -65,7 +65,12 @@ void Application::write_location(bool reset)
 
     if (m_pManager->simulate_location(reset, &lng, &lat))
     {
-        sprintf(status_msg, "成功!经度: %.6f, 纬度: %.6f", lng, lat); 
+        if (!reset) {
+            sprintf(status_msg, "成功!经度: %.6f, 纬度: %.6f", lng, lat);
+        } else {
+            sprintf(status_msg, "重置成功!");
+        }
+         
     } else {
         OUTPUT_ERROR_MESSAGE();
         return;
@@ -84,7 +89,6 @@ int Application::run(int argc, char* argv[])
 
     static double lat1 = 30.290670;
     static double lat2 = 30.291925;
-
     static double lng1 = 120.067904;
     static double lng2 = 120.069884;
 
@@ -102,7 +106,7 @@ int Application::run(int argc, char* argv[])
                 done = true;
         }
 
-        ImGui_ImplSDLRenderer_NewFrame();
+        ImGui_ImplSDLRenderer_NewFrame(); 
         ImGui_ImplSDL2_NewFrame(m_pWindow);
         ImGui::NewFrame();
 
